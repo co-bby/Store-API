@@ -6,7 +6,7 @@ const getAllProductsStatic = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-  const { featured, company, name, sort, fields } = req.query;
+  const { featured, company, name, sort, fields, limit } = req.query;
   const queryObject = {};
 
   if (featured) {
@@ -33,6 +33,10 @@ const getAllProducts = async (req, res) => {
   if (fields) {
     const fieldsList = fields.split(',').join(' ');
     results = results.select(fieldsList);
+  }
+  // limit
+  if (limit) {
+    results = results.limit(limit);
   }
 
   const products = await results;
